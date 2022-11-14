@@ -1,11 +1,18 @@
 import os
+import sys
 from pathlib import Path
 
 import fire
 from PIL import Image
-from sahi.utils.coco import Coco, CocoAnnotation, CocoCategory, CocoImage
-from sahi.utils.file import save_json
 from tqdm import tqdm
+
+FILE = Path(__file__).resolve()
+ROOT = FILE.parents[0]
+if str(ROOT) not in sys.path:
+    sys.path.append(str(ROOT))
+
+from misc.file import save_json
+from misc.coco import Coco, CocoAnnotation, CocoCategory, CocoImage
 
 CATEGORY_ID_TO_NAME = {
     "0": "ignore",
@@ -101,11 +108,13 @@ def visdrone_to_coco(
         annotation_filename = image_filename.split(".jpg")[0] + ".txt"
         annotation_filepath = str(Path(input_ann_folder) / annotation_filename)
         image = Image.open(image_filepath)
-        cocoimage_filename = str(Path(image_filepath)).split(str(Path(data_folder_dir)))[1]
+        cocoimage_filename = str(Path(image_filepath)).split(
+            str(Path(data_folder_dir)))[1]
         if cocoimage_filename[0] == os.sep:
             cocoimage_filename = cocoimage_filename[1:]
         # create coco image object
-        coco_image = CocoImage(file_name=cocoimage_filename, height=image.size[1], width=image.size[0])
+        coco_image = CocoImage(file_name=cocoimage_filename,
+                               height=image.size[1], width=image.size[0])
         # parse annotation file
         file = open(annotation_filepath, "r")
         lines = file.readlines()

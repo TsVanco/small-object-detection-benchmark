@@ -1,5 +1,5 @@
 import fire
-from sahi.scripts.slice_coco import slice
+from misc.slice_coco import slice
 from tqdm import tqdm
 
 SLICE_SIZE_LIST = [480, 640]
