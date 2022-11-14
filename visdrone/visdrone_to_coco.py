@@ -1,15 +1,11 @@
 import os
-import sys
+
 from pathlib import Path
 
 import fire
 from PIL import Image
 from tqdm import tqdm
 
-FILE = Path(__file__).resolve()
-ROOT = FILE.parents[0]
-if str(ROOT) not in sys.path:
-    sys.path.append(str(ROOT))
 
 from misc.file import save_json
 from misc.coco import Coco, CocoAnnotation, CocoCategory, CocoImage
